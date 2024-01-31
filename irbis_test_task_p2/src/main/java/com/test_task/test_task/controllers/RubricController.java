@@ -21,6 +21,8 @@ import com.test_task.test_task.services.AuthService;
 import com.test_task.test_task.services.RubricService;
 import com.test_task.test_task.services.SourceService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -47,13 +49,14 @@ public class RubricController {
     //     return jsonResponse;
     // }
 
+    @Operation(summary = "Получить рубрики по Id источника")
     @RequestMapping(value="/rubrics",
         method=RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE,
         params = {"sourceid"}
     )
     public String getRubricsBySourceID(
-        @RequestParam("sourceid") Long id,
+        @Parameter(description = "Id источника (несовместимо с sourcename)", required = true) @RequestParam("sourceid") Long id,
         @RequestHeader("x-api-key") String key
     ) {
         if (!authService.Authorize(key))
@@ -65,13 +68,14 @@ public class RubricController {
         return jsonResponse;
     }
 
+    @Operation(summary = "Получить рубрики по названию источника")
     @RequestMapping(value="/rubrics",
     method=RequestMethod.GET,
     produces = MediaType.APPLICATION_JSON_VALUE,
-    params = {"source"}
+    params = {"sourcename"}
 )
     public String getRubricsBySourceName(
-        @RequestParam("source") String name,
+        @Parameter(description = "Название источника (несовместимо с sourceid)", required = true) @RequestParam("sourcename") String name,
         @RequestHeader("x-api-key") String key
     ) {
     if (!authService.Authorize(key))

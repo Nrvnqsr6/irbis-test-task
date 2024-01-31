@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.test_task.test_task.services.AuthService;
 import com.test_task.test_task.services.SourceService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,6 +25,7 @@ public class SourceController {
     private final SourceService sourceService;
     private final AuthService authService;
 
+    @Operation(summary = "Получить все источники")
     @RequestMapping(value="/sources"
         , method=RequestMethod.GET 
         , produces = MediaType.APPLICATION_JSON_VALUE)
