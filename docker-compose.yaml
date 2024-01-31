@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: irbis-test-task
     ports:
       - "5432:5432"
+    healthcheck:
+      test: pg_isready -U postgres
 
   pgadmin:
     container_name: pgadmin4_container_test_task
@@ -23,13 +25,14 @@ services:
   app1:
     container_name: app1
     build: ./irbis_test_task_p1
+    restart: on-failure:5
     environment:
       connection_path: jdbc:postgresql://host.docker.internal:5432/irbis-test-task
       user: root
       password: root
     depends_on:
-      - db
-      - app2
+      db:
+        condition: service_healthy
 
   app2:
     container_name: app2
@@ -41,5 +44,9 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      app1: 
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+      
 
