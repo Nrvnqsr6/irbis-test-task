@@ -50,10 +50,10 @@ public class RubricController {
     @RequestMapping(value="/rubrics",
         method=RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE,
-        params = {"id"}
+        params = {"sourceid"}
     )
     public String getRubricsBySourceID(
-        @RequestParam("id") Long id,
+        @RequestParam("sourceid") Long id,
         @RequestHeader("x-api-key") String key
     ) {
         if (!authService.Authorize(key))
@@ -68,10 +68,10 @@ public class RubricController {
     @RequestMapping(value="/rubrics",
     method=RequestMethod.GET,
     produces = MediaType.APPLICATION_JSON_VALUE,
-    params = {"name"}
+    params = {"source"}
 )
     public String getRubricsBySourceName(
-        @RequestParam("name") String name,
+        @RequestParam("source") String name,
         @RequestHeader("x-api-key") String key
     ) {
     if (!authService.Authorize(key))
