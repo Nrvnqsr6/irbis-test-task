@@ -12,7 +12,7 @@ public class App
      */
     public static void main( String[] args ) throws ClassNotFoundException
     {
-        Class.forName("org.postgresql.Driver");
+        //Class.forName("org.postgresql.Driver");
         
         try {
             Database.Connect();

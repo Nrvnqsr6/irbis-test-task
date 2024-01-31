@@ -98,7 +98,7 @@ public class Database {
             CREATE TABLE IF NOT EXISTS public.auth
             (
                 id SERIAL PRIMARY KEY,
-                key text NOT NULL
+                key text NOT NULL,
                 UNIQUE (key)
             )
                 """;
