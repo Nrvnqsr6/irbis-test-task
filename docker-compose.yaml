@@ -1,0 +1,45 @@
+services:
+  db:
+    container_name: pg_container_test_task
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: irbis-test-task
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    container_name: pgadmin4_container_test_task
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root  
+    ports:
+      - "5050:80"
+
+  app1:
+    container_name: app1
+    build: ./irbis_test_task_p1
+    environment:
+      connection_path: jdbc:postgresql://host.docker.internal:5432/irbis-test-task
+      user: root
+      password: root
+    depends_on:
+      - db
+      - app2
+
+  app2:
+    container_name: app2
+    build: ./irbis_test_task_p2
+    environment:
+      connection_path: jdbc:postgresql://host.docker.internal:5432/irbis-test-task
+      user: root
+      password: root
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+

@@ -1,0 +1,8 @@
+FROM eclipse-temurin:17-jdk-jammy
+
+WORKDIR /app
+EXPOSE 8080
+COPY . /app
+ADD irbis_test_task_p2.jar .
+CMD ["java", "-jar", "irbis_test_task_p2.jar"]
+
